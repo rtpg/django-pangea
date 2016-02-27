@@ -1,8 +1,21 @@
+from pangea.AST import Case, Property, Concat
 
 
-
-class P(object):
+class Pangea(object):
     """
     singleton to help with building Pangea ADTS
     """
-    pass
+
+    @classmethod
+    def Case(cls, *args, **kwargs):
+        return Case(*args, **kwargs)
+
+    def __call__(self, *args, **kwargs):
+        return Property(*args, **kwargs)
+
+    def Concat(self, *args):
+        return Concat(args)
+
+    Else = True
+
+P = Pangea()
