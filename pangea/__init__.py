@@ -1,4 +1,4 @@
-from pangea.AST import Case, Property, Concat
+from pangea.AST import Case, Property, Concat, When
 
 
 class Pangea(object):
@@ -16,6 +16,9 @@ class Pangea(object):
     def Concat(self, *args):
         return Concat(args)
 
-    Else = True
+    def When(self, **kwargs):
+        return When(**kwargs)
+
+    Else = AST.Else
 
 P = Pangea()

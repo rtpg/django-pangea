@@ -11,15 +11,22 @@ class Client(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
+    priority = models.IntegerField()
     name_format = models.CharField(choices=(('us', 'First Name First'),
                                             ('jp', 'Last Name First')), max_length=3)
 
 
 
     display_name = P.Case(
-        (P('name_format') == 'us', P.Concat(P('first_name'), ' ', P('last_name'))),
-        (P('name_format') == 'jp', P.Concat(P('last_name'), ' ', P('first_name'))),
+        (P.When(name_format='us'), P.Concat(P('first_name'), ' ', P('last_name'))),
+        (P.When(name_format='jp'), P.Concat(P('last_name'), ' ', P('first_name'))),
         (P.Else, 'Undefined Name')
+    )
+
+    priority_display = P.Case(
+        (P.When(priority__lte=3), 'Low'),
+        (P.When(priority=4), 'Med'),
+        (P.When(priority__gte=5), 'High')
     )
 
 
