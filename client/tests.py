@@ -5,6 +5,29 @@ from client.models import Client
 
 
 class ClientAccessTestCase(TestCase):
+
+    def test_from_readme(self):
+
+        client = Client.objects.create(
+            first_name="Judith",
+            last_name="Jetter",
+            priority=10,
+            name_format='jp',
+        )
+
+        # operate on a python object directly
+        formatted_name = Client.display_name(client)
+
+        self.assertEqual(formatted_name, "Jetter Judith")
+
+        # get it in ORM operations by annotating it onto a queryset
+        # the value can also be used for things like filtering
+        formatted_name = Client.objects.annotate(
+            display_name=Client.display_name.django()
+        ).values_list('display_name')
+
+        self.assertEqual(formatted_name[0], ("Jetter Judith",))
+
     def test_client_access(self):
         names = [('Shenika', 'Sola', 'us', 2, 'Shenika Sola'),
                  ('Judith', 'Jetter', 'jp', 4, 'Jetter Judith'),  # last name first
@@ -63,6 +86,6 @@ class ClientAccessTestCase(TestCase):
             if priority <= 3:
                 self.assertEqual(display, 'Low')
             if priority == 4:
-                self.assertEqual(display, 'Mid')
+                self.assertEqual(display, 'Med')
             if priority >= 5:
                 self.assertEqual(display, 'High')

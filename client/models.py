@@ -26,7 +26,8 @@ class Client(models.Model):
     priority_display = P.Case(
         (P.When(priority__lte=3), 'Low'),
         (P.When(priority=4), 'Med'),
-        (P.When(priority__gte=5), 'High')
+        (P.When(priority__gte=5), 'High'),
+        django_output_field=models.CharField(),
     )
 
 
