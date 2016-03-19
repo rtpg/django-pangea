@@ -18,9 +18,14 @@ class _Predicate(object):
     def GTE(a,b):
         return a >= b
 
+    @staticmethod
+    def LTE(a,b):
+        return a <= b
+
 _special_keys = {
     'eq': _Predicate.EQ,
-    'gte': _Predicate.GTE
+    'gte': _Predicate.GTE,
+    'lte': _Predicate.LTE
 }
 def get_obj_value(arg_name, obj):
     arg_levels = arg_name.split('__')
@@ -43,4 +48,4 @@ def predicate_check(arg_name, arg_value, obj):
     #
     #
     obj_value, check = get_obj_value(arg_name, obj)
-    return check(arg_value, obj_value)
+    return check(obj_value, arg_value)

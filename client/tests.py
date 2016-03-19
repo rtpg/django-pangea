@@ -36,12 +36,11 @@ class ClientAccessTestCase(TestCase):
 
         set_of_qs_names = set([n['result_name'] for n in names_from_qs])
 
-        import ipdb;ipdb.set_trace()
         self.assertEqual(formatted_names, set_of_qs_names)
 
         # filter by the mechanism
 
-        martin = Client.objects.annotate(display_name=Client.display_name.django)\
+        martin = Client.objects.annotate(display_name=Client.display_name.django())\
             .filter(display_name='Undefined Name').get()
 
         # Make sure it's martin
@@ -56,3 +55,14 @@ class ClientAccessTestCase(TestCase):
             if c.priority >= 5:
                 self.assertEqual(p_d, 'High')
 
+        # check that priority is also working as a django expression real quick
+        priorities = Client.objects.annotate(p=Client.priority_display.django())\
+            .values_list('priority', 'p')
+
+        for priority, display in priorities:
+            if priority <= 3:
+                self.assertEqual(display, 'Low')
+            if priority == 4:
+                self.assertEqual(display, 'Mid')
+            if priority >= 5:
+                self.assertEqual(display, 'High')
