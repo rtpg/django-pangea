@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='django-pangea',
-    packages=['django-pangea'],
+    packages=['pangea'],
     version='0.1',
     license='MIT',
     description='Django model methods that you can execute everywhere',
