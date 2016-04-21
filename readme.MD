@@ -58,6 +58,6 @@ After you have defined a Pangea expression, you can either cast it into the ORM 
         # formatted_name[0] == ("Jetter Judith",)
 ```
 
- Currently Pangea only supports
+ Currently Pangea only supports this basic use case (with possible extensions to more single-table expressions). Still researching how to enable this on more complicated multi-table expressions with joins and the like.
 
  This is still in a very experimental state, but feel free to file issues for any feature requests that you might want!
